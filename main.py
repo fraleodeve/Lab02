@@ -5,15 +5,11 @@ t = tr.Translator()
 d = di.Dictionary()
 
 while(True):
-
     t.printMenu()
-
     lista = t.loadDictionary("dictionary.txt")
-
     dizionario = dict()
     for el in lista:
         dizionario[el.parola_aliena] = [el.parola_umana]
-
     txtIn = input()
 
     if int(txtIn) == 1:
@@ -29,14 +25,18 @@ while(True):
         txt = input("Ok, quale parola devo cercare? ").lower()
         if txt.isalpha():
             elemento = d.translate(txt)
-            print(elemento, "\n")
+            for el in elemento:
+                print(el, end=" ")
+        print("\n")
 
     if int(txtIn) == 3:
-        pass
+        tx = input("Ok, quale parola cercare (inserendo il carattere '?' una sola volta)? ").lower()
+        lista = d.translateWordWildCard(tx)
+        for el in lista:
+            print(el, end=" ")
+        print("\n")
 
     if int(txtIn) == 4:
-        # alternativa: for el in lista:
-
         infile = open("dictionary.txt", "r", encoding="utf-8")
         lines = infile.readlines()
         for i in range(0, len(lines)):
@@ -45,6 +45,7 @@ while(True):
             for j in range(0, len(valore)):
                 print(valore[j], end=" ")
             print()
+        print()
 
     if int(txtIn) == 5:
         break

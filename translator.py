@@ -45,7 +45,6 @@ class Translator:
         file = open("dictionary.txt", "w", encoding="utf-8")
         file.writelines(righe)
         file.close()
-
         # entry is a tuple <parola_aliena> <traduzione1 traduzione2 ...>
 
     def handleTranslate(self, query):
@@ -56,5 +55,8 @@ class Translator:
         return risultato
 
     def handleWildCard(self,query):
+        risultato = ""
+        for i in range(1, len(query)):
+            risultato = risultato + query[i] + " "
         # query is a string with a ? --> <par?la_aliena>
-        pass
+        return risultato

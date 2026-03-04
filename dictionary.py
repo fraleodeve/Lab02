@@ -7,7 +7,6 @@ class Dictionary:
         self.parola_aliena = parola_aliena
         self.parola_umana = parola_umana
 
-
     def addWord(self, txtIn, d, lista):
         valore = txtIn.split()
         count = 0
@@ -30,9 +29,36 @@ class Dictionary:
             valore = lines[i].split()
             if valore[0] == txt:
                 if len(valore) == 2:
-                    return valore[1]
+                    lista.append(valore[1])
                 else:
-                    return t.handleTranslate(valore)
+                    a = t.handleTranslate(valore)
+                    lista.append(a)
+        return lista
 
-    def translateWordWildCard(self):
-        pass
+    def translateWordWildCard(self, tx):
+        infile = open("dictionary.txt", "r", encoding="utf-8")
+        lines = infile.readlines()
+        posizione = 0
+        lista = list()
+        for i in range (0, len(tx)):
+            if tx[i] == "?":
+                posizione = i
+
+        for i in range(0, len(lines)):
+            lines[i] = lines[i].strip("\n")
+            valore = lines[i].split()
+            if posizione == 0:
+                if valore[0][posizione:] == tx[posizione:]:
+                    if len(valore) == 2:
+                        lista.append(valore[1])
+                    else:
+                        a = t.handleTranslate(valore)
+                        lista.append(a)
+
+            if valore[0][:posizione] == tx[:posizione] and valore[0][posizione+1:] == tx[posizione+1:]:
+                if len(valore) == 2:
+                    lista.append(valore[1])
+                else:
+                    c = t.handleTranslate(valore)
+                    lista.append(c)
+        return lista
