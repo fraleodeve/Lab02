@@ -28,32 +28,32 @@ class Translator:
         return lista
         # dict is a string with the filename of the dictionary
 
-    def handleAdd(self, entry, d):
+    def handleAdd(self, entry, d, lista):
         valore = entry.split()
-        count = 0
-        for (key, val) in d.items():
-            if key == valore[0]:
-                count = 1
-        if count == 1:
-            for (key, val) in d.items():
-                if key == valore[0]:
-                    val.append(valore[1])
-                    return Translator(key, valore[0] + " " + valore[1])
-        # aggiornare precedente non aggiungerlo
+        posizione = 0
 
-        if (len(valore)) != 2:
-            for i in range(1, len(valore)-1):
-                for (key, val) in d.items():
-                    if key == valore[0]:
-                        val.append(valore[i])
-        return Translator(valore[0], valore[1]) # cambiare
+        for i in range(0, len(lista)):
+            if lista[i].parola_aliena == valore[0]:
+                posizione = i
 
+        file = open("dictionary.txt", "r", encoding="utf-8")
+        righe = file.readlines()
+        for i in range(1, len(valore)):
+            righe[posizione] = righe[posizione].rstrip("\n") + " " + valore[i] + "\n"
+
+        file.close()
+        file = open("dictionary.txt", "w", encoding="utf-8")
+        file.writelines(righe)
+        file.close()
 
         # entry is a tuple <parola_aliena> <traduzione1 traduzione2 ...>
 
     def handleTranslate(self, query):
+        risultato = ""
+        for i in range (1, len(query)):
+            risultato = risultato + query[i] + " "
         # query is a string <parola_aliena>
-        pass
+        return risultato
 
     def handleWildCard(self,query):
         # query is a string with a ? --> <par?la_aliena>
